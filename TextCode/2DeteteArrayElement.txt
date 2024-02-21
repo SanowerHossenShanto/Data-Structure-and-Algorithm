@@ -1,0 +1,36 @@
+#include <stdio.h>
+
+int main() {
+    int i, n, pos;
+    int a[10];
+
+    printf("Enter the number of elements: ");
+    scanf("%d", &n);
+
+    printf("Enter elements:\n");
+    for (i = 0; i < n; i++) {
+        printf("a[%d] = ", i);
+        scanf("%d", &a[i]);
+    }
+
+    printf("\nEnter the position from which the number has to be deleted: ");
+    scanf("%d", &pos);
+
+    if (pos < 0 || pos >= n) {
+        printf("Invalid position!\n");
+        return 1; // Exit with error code 1
+    }
+
+    // Delete element by shifting elements to the left
+    for (i = pos; i < n - 1; i++) {
+        a[i] = a[i + 1];
+    }
+    n--;
+
+    printf("\nDisplay array after deletion:\n");
+    for (i = 0; i < n; i++) {
+        printf("a[%d] = %d\n", i, a[i]);
+    }
+
+    return 0;
+}

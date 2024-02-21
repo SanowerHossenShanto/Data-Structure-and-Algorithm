@@ -1,0 +1,1 @@
+#include <stdio.h>#include <string.h>int main() {    char str1[20], str2[20], result[40];    printf("\nEnter 1st string: ");    scanf("%19s", str1);    printf("\nEnter 2nd string: ");    scanf("%19s", str2);    strcpy(result,str1);    strcat(result, " ");    strcat(result, str2);    printf("\nResultant string is: %s\n", result);    return 0;}

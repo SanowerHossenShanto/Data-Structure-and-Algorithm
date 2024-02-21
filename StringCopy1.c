@@ -1,0 +1,1 @@
+#include <stdio.h>int main() {    char str[20], str1[20];    int i = 0;    printf("\nEnter string to copy: ");    scanf("%s", str);    while (str[i] != '\0') {        str1[i] = str[i];        i++;    }    str1[i] = '\0';    printf("\nThe Destination string is: %s", str1);    return 0;}

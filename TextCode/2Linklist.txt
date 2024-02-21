@@ -1,0 +1,121 @@
+#include<stdio.h>
+#define TRUE 1
+#define SIZE 10
+
+struct link {
+    int info;
+    int next;
+};
+
+struct link node[SIZE];
+int avail = 0;
+
+int Getnode() {
+    if (avail == -1) {
+        printf("\nOverflow:");
+        exit(0);
+    }
+    int p = avail;
+    avail = node[avail].next;
+    return p;
+}
+
+void Freenode(int q) {
+    node[q].next = avail;
+    avail = q;
+}
+
+void Createlist() {
+    int x;
+    char c;
+    int p = Getnode();
+    printf("\nEnter an item to be inserted: ");
+    scanf("%d", &x);
+    node[p].info = x;
+    node[p].next = -1;
+    while(TRUE) {
+        printf("\nEnter 'y' to insert another item, 'n' to exit: ");
+        fflush(stdin);
+        c = getchar();
+        if (c == 'y' || c == 'Y') {
+            printf("\nEnter an item to be inserted: ");
+            scanf("%d", &x);
+            int q = Getnode();
+            node[q].info = x;
+            node[q].next = -1;
+            node[p].next = q;
+            p = q;
+        } else {
+            return;
+        }
+    }
+}
+
+void Display() {
+    int p = 0;
+    while (node[p].next != -1) {
+        printf("\n%d\t%d\t%d", p, node[p].info, node[p].next);
+        p = node[p].next;
+    }
+    printf("\n%d\t%d\t%d", p, node[p].info, node[p].next);
+}
+
+void Insert(int r, int x) {
+    if (r == -1) {
+        printf("\nVoid insertion:");
+        return;
+    }
+    int q = Getnode();
+    node[q].info = x;
+    node[q].next = node[r].next;
+    node[r].next = q;
+}
+
+void Delete(int r) {
+    if (r == -1 || node[r].next == -1) {
+        printf("\nVoid deletion:");
+        return;
+    }
+    int q = node[r].next;
+    node[r].next = node[q].next;
+    Freenode(q);
+}
+
+int main() {
+    int ch = 1, n, x, p;
+    for (int i = 0; i < SIZE - 1; i++)
+        node[i].next = i + 1;
+    node[SIZE - 1].next = -1;
+
+    printf("\nCreate a List:");
+    Createlist();
+
+    while(ch != 4) {
+        printf("\n1-DISPLAY\n2-INSERT\n3-DELETE\n4-QUIT\nEnter your choice: ");
+        scanf("%d", &ch);
+        switch(ch) {
+            case 1:
+                Display();
+                break;
+            case 2:
+                printf("\nNode insertion: after which node: ");
+                scanf("%d", &n);
+                p = n;
+                printf("\nEnter the item for insertion: ");
+                scanf("%d", &x);
+                Insert(p, x);
+                break;
+            case 3:
+                printf("\nEnter the node after which the node will be deleted: ");
+                scanf("%d", &n);
+                p = n;
+                Delete(p);
+                break;
+            case 4:
+                break;
+            default:
+                printf("\nWrong choice! Try again:");
+        }
+    }
+    return 0;
+}

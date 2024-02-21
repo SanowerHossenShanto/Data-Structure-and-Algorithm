@@ -1,0 +1,1 @@
+#include <stdio.h>int calculateFactorial(int n) {    if (n == 0)        return 1;    else        return n * calculateFactorial(n - 1);}int main() {    int number;    printf("\nEnter the number: ");    scanf("%d", &number);    printf("Factorial of %d is %d\n", number, calculateFactorial(number));    return 0;}

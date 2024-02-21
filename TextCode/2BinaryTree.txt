@@ -1,0 +1,118 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+#define TRUE 1
+#define FALSE 0
+#define TREENODES 100
+
+struct tree {
+    int info;
+    int used;
+};
+
+struct tree node[TREENODES];
+
+void createTree(int);
+void insert(int);
+void display();
+void setLeft(int, int);
+void setRight(int, int);
+
+int main() {
+    int x;
+    char ch = '1';
+
+    printf("\nEnter root node value: ");
+    scanf("%d", &x);
+    createTree(x);
+
+    while (ch != '3') {
+        printf("\n1-INSERT");
+        printf("\n2-DISPLAY");
+        printf("\n3-QUIT");
+        printf("\nEnter your choice: ");
+        fflush(stdin);
+        ch = getchar();
+
+        switch (ch) {
+            case '1':
+                printf("\nEnter the element to be inserted: ");
+                scanf("%d", &x);
+                insert(x);
+                break;
+            case '2':
+                display();
+                break;
+            case '3':
+                break;
+            default:
+                printf("\nWrong choice! Try again.\n");
+        }
+    }
+
+    return 0;
+}
+
+void createTree(int x) {
+    int i;
+    node[0].info = x;
+    node[0].used = TRUE;
+
+    for (i = 1; i < TREENODES; i++)
+        node[i].used = FALSE;
+}
+
+void insert(int x) {
+    int p = 0, q = 0;
+
+    while (q < TREENODES && node[q].used && x != node[p].info) {
+        p = q;
+
+        if (x < node[p].info)
+            q = 2 * p + 1;
+        else
+            q = 2 * p + 2;
+    }
+
+    if (x == node[p].info)
+        printf("\n%d is a duplicate number\n", x);
+    else if (x < node[p].info)
+        setLeft(p, x);
+    else
+        setRight(p, x);
+}
+
+void setLeft(int pos, int x) {
+    int q = 2 * pos + 1;
+
+    if (q >= TREENODES)
+        printf("\nArray overflow.");
+    else if (node[q].used == TRUE)
+        printf("\nInvalid insertion.");
+    else {
+        node[q].info = x;
+        node[q].used = TRUE;
+    }
+}
+
+void setRight(int pos, int x) {
+    int q = 2 * pos + 2;
+
+    if (q >= TREENODES)
+        printf("\nArray overflow.");
+    else if (node[q].used == TRUE)
+        printf("\nInvalid insertion.");
+    else {
+        node[q].info = x;
+        node[q].used = TRUE;
+    }
+}
+
+void display() {
+    printf("\nElements in the Tree are: ");
+    for (int i = 0; i < TREENODES; i++) {
+        if (node[i].used == TRUE)
+            printf("%d ", node[i].info);
+    }
+    printf("\n");
+}
